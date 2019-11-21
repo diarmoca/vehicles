@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Vehicles.Common.Models
 {
+    
    public class Vehicle
     {
         [Key]
@@ -55,6 +56,11 @@ namespace Vehicles.Common.Models
 
         [Required]
         public DateTime FechaFinal { get; set; }
+
+        public override string ToString()
+        {
+            return this.Marca;
+        }
 
 
     }
