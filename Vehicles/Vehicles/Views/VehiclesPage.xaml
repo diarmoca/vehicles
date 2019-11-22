@@ -6,10 +6,11 @@
              mc:Ignorable="d"
              x:Class="Vehicles.Views.VehiclesPage"
              BindingContext="{Binding Main, Source={StaticResource Locator}}"
-             Title="Vehicles">
+             Title="Vehículos a Resguardo">
     <ContentPage.Content>
         <StackLayout
-            BindingContext="{Binding Vehicles}">
+            BindingContext="{Binding Vehicles}"
+            Padding="10">
             <ListView
                 HasUnevenRows="True"
                 IsRefreshing="{Binding IsRefreshing}"
@@ -20,7 +21,7 @@
                         <ViewCell>
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2*"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <Label 
@@ -31,6 +32,7 @@
                                 <Label 
                                     Grid.Column="1"
                                     HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"
                                     Text="{Binding Tipo}">
                                 </Label>
                             </Grid>
