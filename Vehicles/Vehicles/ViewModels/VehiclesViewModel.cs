@@ -53,7 +53,9 @@ namespace Vehicles.ViewModels
             }
 
             var url = Application.Current.Resources["UrlAPI"].ToString();
-            var response = await this.apiService.GetList<Vehicle>(url, "/api", "/Vehicles");
+            var prefix = Application.Current.Resources["UrlPrefix"].ToString();
+            var vController = Application.Current.Resources["UrlVehiclesController"].ToString();
+            var response = await this.apiService.GetList<Vehicle>(url, prefix, vController);
             if (!response.IsSuccess)
             {
                 this.IsRefreshing = false;

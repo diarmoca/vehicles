@@ -6,11 +6,14 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Vehicles.Common.Models;
+using Xamarin.Forms;
 
 namespace Vehicles.Services
 {
    public class ApiService
     {
+       
+
         public async Task<Response> CheckConnection()
         {
             if (!CrossConnectivity.Current.IsConnected)
@@ -18,17 +21,18 @@ namespace Vehicles.Services
                 return new Response
                 {
                     IsSuccess = false,
-                    Message = "Please Turn On your conecction settings.",
+                    Message = "Por favor encienda o habilite su conexión a internet",
 
                 };
             }
+           // var urlPing = Application.Current.Resources["UrlPing"].ToString();
             var isReachable = await CrossConnectivity.Current.IsRemoteReachable("google.com");
             if (!isReachable)
             {
                 return new Response
                 {
                     IsSuccess = false,
-                    Message = "No Internet connection.",
+                    Message = "No tiene conexión a internet",
                 };
 
             }

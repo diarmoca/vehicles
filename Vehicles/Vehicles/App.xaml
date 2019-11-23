@@ -13,6 +13,10 @@
 
             <!-- Parameter -->
             <x:String x:Key="UrlAPI">https://dbavehiclesapi.azurewebsites.net</x:String>
+            <x:String x:Key="UrlPrefix">/api</x:String>
+            <x:String x:Key="UrlVehiclesController">/Vehicles</x:String>
+            <x:String x:Key="UrlPing">google.com</x:String>
+            
         </ResourceDictionary>
     </Application.Resources>
 </Application>

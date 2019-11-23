@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using Vehicles.Backend.Models;
 using Vehicles.Common.Models;
+using Vehicles.Backend.Helpers;
 
 namespace Vehicles.Backend.Controllers
 {
@@ -43,21 +44,56 @@ namespace Vehicles.Backend.Controllers
             return View();
         }
 
-        // POST: Vehicles/Create
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "id,Marca,Tipo,Color,Modelo,NoPlacas,NoSerie,Depositarios,Cargo,Adscripcion,NoAveriguacion,NoExpediente,Origen,FechaInicio,FechaFinal")] Vehicle vehicle)
+        // public async Task<ActionResult> Create([Bind(Include = "id,Marca,Tipo,Color,Modelo,NoPlacas,NoSerie,Depositarios,Cargo,Adscripcion,NoAveriguacion,NoExpediente,Origen,FechaInicio,FechaFinal,ImagePath")] Vehicle vehicle)
+        public async Task<ActionResult> Create(VehicleView view)
         {
             if (ModelState.IsValid)
             {
+                var pic = string.Empty;
+                var folder = "~/Content/Vehicles";
+
+                if (view.ImageFile != null)
+                {
+                    pic = FilesHelper.UploadPhoto(view.ImageFile, folder);
+                    pic = $"{ folder}/{ pic}";
+                }
+
+                var vehicle = this.ToVehicle(view, pic);
+
                 db.Vehicles.Add(vehicle);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            return View(vehicle);
+            return View(view);
+        }
+
+        private Vehicle ToVehicle(VehicleView view, string pic)
+        {
+            return new Vehicle
+            {
+                id = view.id,
+                Marca = view.Marca,
+                Tipo = view.Tipo,
+                Color = view.Color,
+                Modelo = view.Modelo,
+                NoPlacas = view.NoPlacas,
+                NoSerie = view.NoSerie,
+                Depositarios = view.Depositarios,
+                Cargo = view.Cargo,
+                Adscripcion = view.Adscripcion,
+                NoAveriguacion = view.NoAveriguacion,
+                NoExpediente = view.NoExpediente,
+                Origen = view.Origen,
+                FechaInicio = view.FechaInicio,
+                FechaFinal = view.FechaFinal,
+                ImagePath = pic,
+                
+
+
+            };
         }
 
         // GET: Vehicles/Edit/5
@@ -67,7 +103,9 @@ namespace Vehicles.Backend.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Vehicle vehicle = await db.Vehicles.FindAsync(id);
+
+            var vehicle = await db.Vehicles.FindAsync(id);
+
             if (vehicle == null)
             {
                 return HttpNotFound();
@@ -75,12 +113,10 @@ namespace Vehicles.Backend.Controllers
             return View(vehicle);
         }
 
-        // POST: Vehicles/Edit/5
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "id,Marca,Tipo,Color,Modelo,NoPlacas,NoSerie,Depositarios,Cargo,Adscripcion,NoAveriguacion,NoExpediente,Origen,FechaInicio,FechaFinal")] Vehicle vehicle)
+        //public async Task<ActionResult> Edit([Bind(Include = "id,Marca,Tipo,Color,Modelo,NoPlacas,NoSerie,Depositarios,Cargo,Adscripcion,NoAveriguacion,NoExpediente,Origen,FechaInicio,FechaFinal,ImagePath")] Vehicle vehicle)
+        public async Task<ActionResult> Edit(Vehicle vehicle)
         {
             if (ModelState.IsValid)
             {
@@ -98,7 +134,7 @@ namespace Vehicles.Backend.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Vehicle vehicle = await db.Vehicles.FindAsync(id);
+            var vehicle = await db.Vehicles.FindAsync(id);
             if (vehicle == null)
             {
                 return HttpNotFound();
@@ -111,7 +147,7 @@ namespace Vehicles.Backend.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(string id)
         {
-            Vehicle vehicle = await db.Vehicles.FindAsync(id);
+            var vehicle = await db.Vehicles.FindAsync(id);
             db.Vehicles.Remove(vehicle);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");

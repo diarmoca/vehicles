@@ -51,11 +51,13 @@ namespace Vehicles.Common.Models
         [Required]
         public string Origen { get; set; }
 
-        [Required]
+        [DataType(DataType.Date)]
         public DateTime FechaInicio { get; set; }
 
-        [Required]
+        [DataType(DataType.Date)]
         public DateTime FechaFinal { get; set; }
+
+        public string ImagePath { get; set; }
 
         public override string ToString()
         {

@@ -4,10 +4,10 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h1>Veículos en Resguardo</h1>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Nuevo Registro", "Create", new { },new {@class = "btn btn-primary" })
 </p>
 <table class="table">
     <tr>
@@ -17,18 +17,15 @@
         <th>
             @Html.DisplayNameFor(model => model.Tipo)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Color)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Modelo)
-        </th>
+
         <th>
             @Html.DisplayNameFor(model => model.NoPlacas)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.NoSerie)
         </th>
+
+
         <th>
             @Html.DisplayNameFor(model => model.Depositarios)
         </th>
@@ -38,74 +35,61 @@
         <th>
             @Html.DisplayNameFor(model => model.Adscripcion)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NoAveriguacion)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NoExpediente)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Origen)
-        </th>
+       
         <th>
             @Html.DisplayNameFor(model => model.FechaInicio)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.FechaFinal)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ImagePath)
+        </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Marca)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Tipo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Color)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Modelo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NoPlacas)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NoSerie)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Depositarios)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Cargo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Adscripcion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NoAveriguacion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NoExpediente)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Origen)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FechaInicio)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FechaFinal)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Marca)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Tipo)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.NoPlacas)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.NoSerie)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Depositarios)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Cargo)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Adscripcion)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.FechaInicio)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.FechaFinal)
+    </td>
+    <td>
+        @if (!string.IsNullOrEmpty(item.ImagePath))
+        {
+            <img src="@Url.Content(item.ImagePath)" alt="Image" style="width:100px;height:150px;max-width: 100%; height: auto;" />
+        }
 
-</table>
+    </td>
+    <td>
+        @Html.ActionLink("Editar", "Edit", new { id = item.id }, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Detalles", "Details", new { id = item.id }, new { @class = "btn btn-info" })
+        @Html.ActionLink("Eliminar", "Delete", new { id = item.id }, new { @class = "btn btn-danger" })
+    </td>
+</tr>
+    }
+
+    </table>
