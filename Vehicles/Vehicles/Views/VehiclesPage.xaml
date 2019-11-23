@@ -19,26 +19,16 @@
                 ItemsSource="{Binding Vehicles}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ViewCell>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Label 
-                                    FontAttributes="Bold"
-                                    Grid.Column="0"
-                                    Text="{Binding Marca}">
-                                </Label>
-                                <Label 
-                                    Grid.Column="1"
-                                    HorizontalOptions="Center"
-                                    HorizontalTextAlignment="Center"
-                                    Text="{Binding Tipo}">
-                                </Label>
-                            </Grid>
-                        </ViewCell>
+                        <ImageCell ImageSource="{Binding ImageFullPath}"
+                           Text="{Binding Marca}"
+                           Detail="{Binding Tipo}"
+                           Height="50"
+                           />
+
                     </DataTemplate>
+
+
+
                 </ListView.ItemTemplate>
             </ListView>
         </StackLayout>

@@ -110,21 +110,58 @@ namespace Vehicles.Backend.Controllers
             {
                 return HttpNotFound();
             }
-            return View(vehicle);
+            var view = this.ToView(vehicle);
+            return View(view);
+        }
+
+        private VehicleView ToView(Vehicle vehicle )
+        {
+            return new VehicleView
+            {
+                id = vehicle.id,
+                Marca = vehicle.Marca,
+                Tipo = vehicle.Tipo,
+                Color = vehicle.Color,
+                Modelo = vehicle.Modelo,
+                NoPlacas = vehicle.NoPlacas,
+                NoSerie = vehicle.NoSerie,
+                Depositarios = vehicle.Depositarios,
+                Cargo = vehicle.Cargo,
+                Adscripcion = vehicle.Adscripcion,
+                NoAveriguacion = vehicle.NoAveriguacion,
+                NoExpediente = vehicle.NoExpediente,
+                Origen = vehicle.Origen,
+                FechaInicio = vehicle.FechaInicio,
+                FechaFinal = vehicle.FechaFinal,
+                ImagePath = vehicle.ImagePath,
+
+
+
+            };
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         //public async Task<ActionResult> Edit([Bind(Include = "id,Marca,Tipo,Color,Modelo,NoPlacas,NoSerie,Depositarios,Cargo,Adscripcion,NoAveriguacion,NoExpediente,Origen,FechaInicio,FechaFinal,ImagePath")] Vehicle vehicle)
-        public async Task<ActionResult> Edit(Vehicle vehicle)
+        public async Task<ActionResult> Edit(VehicleView view)
         {
             if (ModelState.IsValid)
             {
+                var pic = view.ImagePath;
+                var folder = "~/Content/Vehicles";
+
+                if (view.ImageFile != null)
+                {
+                    pic = FilesHelper.UploadPhoto(view.ImageFile, folder);
+                    pic = $"{ folder}/{ pic}";
+                }
+
+                var vehicle = this.ToVehicle(view, pic);
                 db.Entry(vehicle).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(vehicle);
+            return View(view);
         }
 
         // GET: Vehicles/Delete/5

@@ -56,13 +56,29 @@ namespace Vehicles.Common.Models
 
         [DataType(DataType.Date)]
         public DateTime FechaFinal { get; set; }
-
+        
+        [Display(Name = "Foto")]
         public string ImagePath { get; set; }
+
+        public string ImageFullPath
+        {
+            get
+            {
+                if(string.IsNullOrEmpty(this.ImagePath))
+                {
+                    return null;
+                }
+                var image = $"https://vehiclesbackend.azurewebsites.net{this.ImagePath.Substring(1)}";
+                return image;
+            }
+        }
 
         public override string ToString()
         {
             return this.Marca;
         }
+
+
 
 
     }
